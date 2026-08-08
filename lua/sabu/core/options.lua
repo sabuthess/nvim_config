@@ -57,3 +57,18 @@ vim.filetype.add({
 		["project.godot"] = "godot",
 	},
 })
+
+vim.diagnostic.config({
+  virtual_text = true,
+  float = {
+    border = "rounded",
+    source = "always",     
+    header = "",
+    prefix = "",
+    max_width = 100,   
+    wrap = true,
+  },
+})
+
+vim.opt.guicursor = "a:ver50-blinkwait700-blinkoff400-blinkon250"
+vim.opt.showtabline = 0

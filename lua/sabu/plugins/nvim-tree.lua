@@ -24,10 +24,26 @@ return {
           resize_window = true,
         },
       },
-      renderer = {
+     renderer = {
         highlight_opened_files = "all",
+        icons = {
+          show = {
+            git = true,
+          },
+          glyphs = {
+            git = {
+              unstaged  = "M",
+              staged    = "A",
+              unmerged  = "",
+              renamed   = "R",
+              untracked = "?",
+              deleted   = "D",
+              ignored   = "◌",
+            },
+          },
+        },
       },
-      git = { enable = false },
+      git = { enable = true },
       tab = {
         sync = {
           open = false,
