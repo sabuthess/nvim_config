@@ -2,7 +2,6 @@ return {
 	"akinsho/bufferline.nvim",
 	version = "*",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
-
 	config = function()
 		local bufferline = require("bufferline")
 
@@ -20,39 +19,75 @@ return {
 			local tabline = hl("TabLine")
 			local normal = hl("Normal")
 			local fill_bg = (tabline_fill and tabline_fill.bg) or (tabline and tabline.bg) or (normal and normal.bg)
-
 			if fill_bg then
 				vim.api.nvim_set_hl(0, "BufferLineFill", { bg = fill_bg })
 			end
 		end
 
 		local function sync_tab_highlights()
-			local normal = hl("Normal")
-			local tabline = hl("TabLine")
-			local tabline_sel = hl("TabLineSel")
+			local base_fg = fg_or_nil("Normal") or "#ffffff"
+			local selected_bg = fg_or_nil("CursorLine") or "#3c3c3c"
 
-			if not normal then
-				return
+			vim.api.nvim_set_hl(0, "BufferLineBufferSelected", {
+				fg = "#ffffff",
+				bold = true,
+			})
+			vim.api.nvim_set_hl(0, "BufferLineDuplicate", {
+				bg = "NONE",
+				fg = base_fg,
+			})
+			vim.api.nvim_set_hl(0, "BufferLineDuplicateVisible", {
+				bg = "NONE",
+				fg = base_fg,
+			})
+			vim.api.nvim_set_hl(0, "BufferLineDuplicateSelected", {
+				bg = "NONE",
+				fg = "#ffffff",
+				bold = true,
+			})
+			vim.api.nvim_set_hl(0, "BufferLineModified", {
+				bg = "NONE",
+				fg = fg_or_nil("DiagnosticWarn") or base_fg,
+			})
+			vim.api.nvim_set_hl(0, "BufferLineModifiedVisible", {
+				bg = "NONE",
+				fg = fg_or_nil("DiagnosticWarn") or base_fg,
+			})
+			vim.api.nvim_set_hl(0, "BufferLineModifiedSelected", {
+				bg = "NONE",
+				fg = "NONE",
+			})
+			-- Separadores transparentes
+			vim.api.nvim_set_hl(0, "BufferLineSeparator", {
+				bg = "NONE",
+				fg = "NONE",
+			})
+			vim.api.nvim_set_hl(0, "BufferLineSeparatorVisible", {
+				bg = "NONE",
+				fg = "NONE",
+			})
+			vim.api.nvim_set_hl(0, "BufferLineSeparatorSelected", {
+				bg = "NONE",
+				fg = "NONE",
+			})
+			vim.api.nvim_set_hl(0, "BufferLineIndicatorSelected", {
+				bg = "NONE",
+				fg = "NONE",
+			})
+		end
+
+		local function sync_devicon_highlights()
+			local all_hl = vim.api.nvim_get_hl(0, {})
+			for name, _ in pairs(all_hl) do
+				if name:match("^BufferLineDevIcon") then
+					local icon_hl = hl(name)
+					if icon_hl then
+						icon_hl.bg = nil
+						icon_hl.ctermbg = nil
+						vim.api.nvim_set_hl(0, name, icon_hl)
+					end
+				end
 			end
-
-			local base_bg = (tabline and tabline.bg) or normal.bg
-			local base_fg = (tabline and tabline.fg) or normal.fg
-			local selected_bg = (tabline_sel and tabline_sel.bg) or normal.bg or base_bg
-			local selected_fg = (tabline_sel and tabline_sel.fg) or normal.fg
-
-			vim.api.nvim_set_hl(0, "BufferLineBackground", { bg = base_bg, fg = base_fg })
-			vim.api.nvim_set_hl(0, "BufferLineBufferVisible", { bg = base_bg, fg = base_fg })
-			vim.api.nvim_set_hl(0, "BufferLineBufferSelected", { bg = selected_bg, fg = selected_fg, bold = true })
-			vim.api.nvim_set_hl(0, "BufferLineDuplicate", { bg = base_bg, fg = base_fg })
-			vim.api.nvim_set_hl(0, "BufferLineDuplicateVisible", { bg = base_bg, fg = base_fg })
-			vim.api.nvim_set_hl(0, "BufferLineDuplicateSelected", { bg = selected_bg, fg = selected_fg, bold = true })
-			vim.api.nvim_set_hl(0, "BufferLineModified", { bg = base_bg, fg = fg_or_nil("DiagnosticWarn") or base_fg })
-			vim.api.nvim_set_hl(0, "BufferLineModifiedVisible", { bg = base_bg, fg = fg_or_nil("DiagnosticWarn") or base_fg })
-			vim.api.nvim_set_hl(0, "BufferLineModifiedSelected", { bg = selected_bg, fg = fg_or_nil("DiagnosticWarn") or selected_fg })
-			vim.api.nvim_set_hl(0, "BufferLineSeparator", { bg = base_bg, fg = base_bg })
-			vim.api.nvim_set_hl(0, "BufferLineSeparatorVisible", { bg = base_bg, fg = base_bg })
-			vim.api.nvim_set_hl(0, "BufferLineSeparatorSelected", { bg = selected_bg, fg = selected_bg })
-			vim.api.nvim_set_hl(0, "BufferLineIndicatorSelected", { bg = selected_bg, fg = fg_or_nil("Special") or selected_fg })
 		end
 
 		local options = {
@@ -71,6 +106,7 @@ return {
 		bufferline.setup(options)
 		sync_fill_highlight()
 		sync_tab_highlights()
+		sync_devicon_highlights()
 
 		vim.api.nvim_create_autocmd("ColorScheme", {
 			group = vim.api.nvim_create_augroup("SalarBufferlineThemeSync", { clear = true }),
@@ -78,6 +114,7 @@ return {
 				bufferline.setup(options)
 				sync_fill_highlight()
 				sync_tab_highlights()
+				sync_devicon_highlights()
 			end,
 		})
 
