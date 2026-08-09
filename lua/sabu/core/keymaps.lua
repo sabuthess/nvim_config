@@ -38,3 +38,5 @@ keymap.set("n", "<leader>tp", "<cmd>ThemePrev<CR>", { desc = "Previous theme" })
 
 -- terminal related
 keymap.set("t", "<Esc>", [[<C-\><C-n>]])
+
+vim.keymap.set("n", "<A-z>", "<cmd>set wrap!<cr>", { desc = "Toggle word wrap" })
