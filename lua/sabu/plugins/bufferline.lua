@@ -26,10 +26,10 @@ return {
 
 		local function sync_tab_highlights()
 			local base_fg = fg_or_nil("Normal") or "#ffffff"
-			local selected_bg = fg_or_nil("CursorLine") or "#3c3c3c"
 
 			vim.api.nvim_set_hl(0, "BufferLineBufferSelected", {
 				fg = "#ffffff",
+				bg = "NONE",
 				bold = true,
 			})
 			vim.api.nvim_set_hl(0, "BufferLineDuplicate", {
