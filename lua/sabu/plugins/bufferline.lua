@@ -29,7 +29,6 @@ return {
 
 			vim.api.nvim_set_hl(0, "BufferLineBufferSelected", {
 				fg = "#ffffff",
-				bg = "NONE",
 				bold = true,
 			})
 			vim.api.nvim_set_hl(0, "BufferLineDuplicate", {
