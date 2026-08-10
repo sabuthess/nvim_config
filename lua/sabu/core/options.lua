@@ -72,3 +72,9 @@ vim.diagnostic.config({
 
 vim.opt.guicursor = "a:ver50-blinkwait700-blinkoff400-blinkon250"
 vim.opt.showtabline = 0
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+	callback = function()
+		vim.api.nvim_set_hl(0, "Visual", { bg = "#222423" })
+	end,
+})
