@@ -70,25 +70,5 @@ vim.diagnostic.config({
   },
 })
 
-vim.opt.guicursor = "a:ver50-blinkwait700-blinkoff400-blinkon250"
+-- vim.opt.guicursor = "a:ver50-blinkwait700-blinkoff400-blinkon250"
 vim.opt.showtabline = 0
-
-vim.api.nvim_create_autocmd("ColorScheme", {
-  callback = function()
-    vim.api.nvim_set_hl(0, "LineNr", { fg = "#c5cddb" })
-    vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#e5c07b", bold = true })
-  end,
-})
-
-vim.api.nvim_create_autocmd("ColorScheme", {
-	callback = function()
-		vim.api.nvim_set_hl(0, "Visual", { bg = "#222423" })
-		for name, _ in pairs(vim.api.nvim_get_hl(0, {})) do
-    if name:match("^DevIcon") or name:match("^BufferLineDevIcon") then
-        local hl = vim.api.nvim_get_hl(0, { name = name })
-        hl.bg = nil
-        vim.api.nvim_set_hl(0, name, hl)
-    end
-end
-	end,
-})

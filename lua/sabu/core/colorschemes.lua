@@ -5,6 +5,7 @@ M.items = {
 		repo = "oskarnurm/koda.nvim",
 		schemes = { "koda", "koda-dark", "koda-light", "koda-glade", "koda-moss" },
 	},
+	
 }
 
 function M.names()
