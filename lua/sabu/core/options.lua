@@ -76,8 +76,9 @@ vim.opt.showtabline = 0
 vim.api.nvim_create_autocmd("ColorScheme", {
   callback = function()
     vim.api.nvim_set_hl(0, "Visual", {
-         bg = "#94e2d5",
-  fg = "#1e1e2e",
-  bold = true,    })
+         bg = "#5c5a5a",
+  	 fg = "#eeeeee",
+  	 bold = true,    
+ })
   end,
 })
