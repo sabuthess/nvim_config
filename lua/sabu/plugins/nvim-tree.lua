@@ -18,6 +18,10 @@ return {
         width = 35,
         preserve_window_proportions = true,
       },
+      filters = {
+        git_ignored = false,
+        dotfiles = false,    
+      },
       actions = {
         open_file = {
           quit_on_open = false,
